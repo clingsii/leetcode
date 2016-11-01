@@ -1,5 +1,7 @@
 package com.lc.leetcode;
 
+import org.jetbrains.annotations.Contract;
+
 /**
  * Created by caoling on 2016/11/1.
  * <p>
@@ -35,21 +37,21 @@ public class T400 {
         long total = 0;
         long total1 = 0;
         int order = 1;
-        long power10 = 1;
+
         while (total < n) {
             total1 = total;
-            total += 9 * order * power10;
+            total = totalN(order, power10(order));
             if (total >= n) {
                 break;
             }
-            power10 *= 10;
             order++;
         }
+
         n -= total1;
 
         int offset = n % order == 0 ? n / order - 1 : n / order;
 
-        long number = power10 + offset;
+        long number = power10(order - 1) + offset;
         n -= offset * order;
 
         String digit = String.valueOf(("" + number).charAt(n - 1));
@@ -57,7 +59,23 @@ public class T400 {
         return Integer.valueOf(digit);
     }
 
+    @Contract(pure = true)
+    private static long totalN(int n, long power10) {
+        return n * power10 - (power10 - 1) / 9;
+    }
+
+    private static long[] power10array = {10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000
+            ,10000000000l, 100000000000l, 1000000000000l, 10000000000000l,
+            100000000000000l, 1000000000000000l, 10000000000000000l, 100000000000000000l};
+
+    @Contract(pure = true)
+    private static long power10(int n) {
+        return power10array[n - 1];
+    }
+
     public static void main(String[] args) {
-        System.out.println(findNthDigit(1000000000));
+        System.out.println(findNthDigit(100000000));
+
+//        System.out.println(totalN(3, 1000));
     }
 }
