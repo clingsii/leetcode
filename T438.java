@@ -53,10 +53,6 @@ public class T438 {
             int[] pData = new int[26];
             int startPos = (int) 'a';
 
-            for (int i = 0; i < 26; i++) {
-                pData[i] = 0;
-            }
-
 
             for (char c : p.toCharArray()) {
                 int pos = (int) c - startPos;
